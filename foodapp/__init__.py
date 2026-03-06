@@ -5,10 +5,13 @@ from foodapp.models import User, Category, Food
 from foodapp.core.routes import core_bp
 from foodapp.users.routes import user_bp
 from foodapp.foods.routes import food_bp
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file (for local development only)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not installed, using system environment variables (production)
 
 def create_app():
     app = Flask(__name__)
