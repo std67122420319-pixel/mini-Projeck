@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from foodapp.extensions import db, login_manager, bcrypt
 from foodapp.models import User, Category, Food
+from foodapp.food_categories import CATEGORY_NAMES
 from foodapp.core.routes import core_bp
 from foodapp.users.routes import user_bp
 from foodapp.foods.routes import food_bp
@@ -29,5 +30,14 @@ def create_app():
     app.register_blueprint(core_bp, url_prefix='/')
     app.register_blueprint(user_bp, url_prefix='/users')
     app.register_blueprint(food_bp, url_prefix='/food')
+
+    with app.app_context():
+        # Ensure tables and category master data exist for a new database.
+        db.create_all()
+        existing_names = set(db.session.scalars(db.select(Category.name)).all())
+        missing_names = [name for name in CATEGORY_NAMES if name not in existing_names]
+        if missing_names:
+            db.session.add_all([Category(name=name) for name in missing_names])
+            db.session.commit()
 
     return app

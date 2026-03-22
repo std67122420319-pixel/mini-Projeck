@@ -47,7 +47,8 @@ class Food(db.Model):
   name: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
   price: Mapped[str] = mapped_column(String(25), nullable=False)
   description: Mapped[str] = mapped_column(Text, nullable=False)
-  img_url: Mapped[str] = mapped_column(String(255), nullable=False)
+  # Supports long data URLs (base64) from image uploads.
+  img_url: Mapped[str] = mapped_column(Text, nullable=False)
   is_available: Mapped[bool] = mapped_column(Boolean, default=True)
   user_id: Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
   created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

@@ -1,4 +1,4 @@
-categories = [
+CATEGORY_NAMES = [
     'อาหารไทย',
     'อาหารจีน',
     'อาหารญี่ปุ่น',
@@ -10,6 +10,3 @@ categories = [
     'อาหารเจ',
     'อาหารมังสวิรัติ'
 ]
-
-from foodapp.models import Category
-food_categories = [Category(name=cat) for cat in categories]

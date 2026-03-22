@@ -27,7 +27,9 @@ def new_food():
 
         cats = []
         for cid in category_ids:
-            cats.append(db.session.get(Category, int(cid)))
+            cat = db.session.get(Category, int(cid))
+            if cat:
+                cats.append(cat)
 
         food = Food(
             name=name,
@@ -63,7 +65,9 @@ def edit_food(id):
 
         cats = []
         for cid in category_ids:
-            cats.append(db.session.get(Category, int(cid)))
+            cat = db.session.get(Category, int(cid))
+            if cat:
+                cats.append(cat)
         food.categories = cats
 
         db.session.commit()
